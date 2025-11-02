@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
-import User from "../models/User"; // Make sure User model is in TS format too
+import { User } from "../models/User"; // Make sure User model is in TS format too
 
 interface DecodedToken extends JwtPayload {
   id: string;

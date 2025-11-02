@@ -1,15 +1,12 @@
-import mongoose, { Schema, Document, Model } from "mongoose";
+import mongoose, { Schema, Document } from "mongoose";
 
-// ✅ TypeScript interface for a User document
 export interface IUser extends Document {
   name: string;
   email: string;
   password: string;
-  createdAt: Date;
-  updatedAt: Date;
 }
 
-const UserSchema: Schema<IUser> = new mongoose.Schema(
+const userSchema: Schema<IUser> = new Schema(
   {
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
@@ -18,6 +15,4 @@ const UserSchema: Schema<IUser> = new mongoose.Schema(
   { timestamps: true }
 );
 
-const User: Model<IUser> = mongoose.model<IUser>("User", UserSchema);
-
-export default User;
+export const User = mongoose.model<IUser>("User", userSchema);

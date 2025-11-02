@@ -7,6 +7,8 @@ import path from "path";
 
 import connectDB from "./config/db";
 import authRoutes from "./routes/authRoutes";
+import taskRoutes from "./routes/taskRoutes";
+import projectRoute from "./routes/projectRoute";
 
 // ✅ Import routes (TypeScript paths)
 // import authRoutes from "./routes/authRoutes";
@@ -37,7 +39,8 @@ app.use(express.json());
 // ✅ Routes
 app.use("/api/auth", authRoutes);
 // app.use("/api/users", userRoutes);
-// app.use("/api/task", taskRoutes);
+app.use("/api/task", taskRoutes);
+app.use("/api/project", projectRoute);
 // app.use("/api/report", reportRoutes);
 
 // ✅ Static file serving (uploads folder)
