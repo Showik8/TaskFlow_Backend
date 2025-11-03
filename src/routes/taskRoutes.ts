@@ -1,32 +1,19 @@
 import { Router } from "express";
 import { protect } from "../middlewares/authMiddleware";
 import {
-  //   getTaskById,
-  //   getTasks,
-  //   updateTask,
-  //   deleteTask,
-  //   updateTaskChecklist,
-  //   updateTaskStatus,
+  getProjectsTasks,
+  updateTask,
+  deleteTask,
+  updateTaskStatus,
   createTask,
-  //   getDashboardData,
-  //   getUserDashboardData,
 } from "../controllers/taskController";
 
 const router = Router();
 
-// ✅ Dashboard routes
-// router.get("/dashboard-data", protect, getDashboardData);
-// router.get("/user-dashboard-data", protect, getUserDashboardData);
-
-// ✅ Task CRUD routes
-// router.get("/", protect, getTasks);
-// router.get("/:id", protect, getTaskById);
-router.post("/", createTask);
-// router.put("/:id", protect, updateTask);
-// router.delete("/:id", adminOnly, deleteTask);
-
-// ✅ Task-specific updates
-// router.put("/:id/status", protect, updateTaskStatus);
-// router.put("/:id/todo", protect, updateTaskChecklist);
+router.get("/:id", getProjectsTasks);
+router.post("/", protect, createTask);
+router.put("/:id", protect, updateTask);
+router.put("/status/:id", protect, updateTaskStatus);
+router.delete("/:id", deleteTask);
 
 export default router;
