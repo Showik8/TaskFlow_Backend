@@ -1,8 +1,7 @@
 import dotenv from "dotenv";
-import { VercelRequest, VercelResponse } from "@vercel/node";
 dotenv.config();
 
-import express, { Application, Request, Response } from "express";
+import express, { Application } from "express";
 import cors from "cors";
 
 import connectDB from "./config/db";
@@ -16,7 +15,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || "*",
+    origin: ["https://task-flow-pro-theta.vercel.app", "http://localhost:5173"],
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
@@ -30,10 +29,8 @@ app.use("/api/auth", authRoutes);
 app.use("/api/task", taskRoutes);
 app.use("/api/project", projectRoute);
 
-// const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5000;
 
-export default (req: VercelRequest, res: VercelResponse) => app(req, res);
-
-// export default app.listen(PORT, () => {
-//   console.log(`🚀 Server running on port ${PORT}`);
-// });
+export default app.listen(PORT, () => {
+  console.log(` Server running on port ${PORT}`);
+});

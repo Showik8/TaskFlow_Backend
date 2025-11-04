@@ -49,7 +49,7 @@ export const addProject = async (req: Request, res: Response) => {
 };
 
 // Get all projects
-export const getProjects = async (req: Request, res: Response) => {
+export const getProjects = async (_req: Request, res: Response) => {
   try {
     const projects = await Project.find()
       .populate("members", "name email")

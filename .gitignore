@@ -29,3 +29,4 @@ Thumbs.db
 
 # Optional: Cache folders
 /.cache
+.vercel

@@ -12,7 +12,7 @@ interface ITodo {
 
 export const createTask = async (req: Request, res: Response) => {
   try {
-    const {
+    let {
       title,
       description,
       priority,
@@ -34,6 +34,8 @@ export const createTask = async (req: Request, res: Response) => {
       projectId: string; // project ID
       status: "todo" | "inProgress" | "completed";
     } = req.body;
+
+    title = title.trim().split(" ").join("_");
 
     // Validate required fields
     if (!title || !projectId) {
@@ -143,23 +145,23 @@ export const updateTask = async (req: Request, res: Response) => {
       return res.status(404).json({ message: "Task not found" });
     }
 
-    const {
+    let {
       title,
       description,
       priority,
       dueDate,
-      assignedTo,
       projectId,
       status,
     }: {
-      title?: string;
+      title: string;
       description?: string;
       priority?: "Low" | "Medium" | "High";
       dueDate?: Date | string;
-      assignedTo?: string[]; // array of user IDs
       projectId?: string;
       status?: "todo" | "inProgress" | "completed";
     } = req.body;
+
+    title = title!.trim().split(" ").join("_");
 
     if (projectId) {
       if (!mongoose.Types.ObjectId.isValid(projectId)) {
@@ -221,6 +223,29 @@ export const updateTaskStatus = async (req: Request, res: Response) => {
       .json({ message: "Task updated successfully", task: existingTask });
   } catch (error: any) {
     console.error(error);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+
+export const getTaskByTitle = async (req: Request, res: Response) => {
+  const title = req.query.title;
+  const id = req.query.id;
+
+  try {
+    const task = await Task.findOne({ title: title });
+
+    const sameProject = task?.project.toJSON() === id;
+
+    if (!sameProject) {
+      return res.status(400).json({ message: "Different Project" });
+    }
+
+    if (!task) {
+      return res.status(404).json({ message: "Task Not Founded" });
+    }
+
+    res.send(task);
+  } catch (error: any) {
     res.status(500).json({ message: "Server error", error: error.message });
   }
 };
