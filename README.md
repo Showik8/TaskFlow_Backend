@@ -35,8 +35,8 @@ An example file is provided at `.env.example`.
 
 If you run the seed script, a demo user is created:
 
-- Email: `demo@taskflow.dev`
-- Password: `Demo@1234`
+- Email: `user@taskflow.com`
+- Password: `User123!`
 
 ### Base URL
 
